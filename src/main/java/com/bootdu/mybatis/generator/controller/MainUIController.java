@@ -61,7 +61,7 @@ public class MainUIController extends BaseFXController {
     @FXML
     private TextField domainObjectNameField;
     @FXML
-    private TextField generateKeysField;	//主键ID
+    private TextField generateKeysField;    //主键ID
     @FXML
     private TextField modelTargetProject;
     @FXML
@@ -72,12 +72,13 @@ public class MainUIController extends BaseFXController {
     private TextField mapperName;
     @FXML
     private TextField projectFolderField;
-    @FXML
-    private CheckBox offsetLimitCheckBox;
+    //分页注释
+//    @FXML
+//    private CheckBox offsetLimitCheckBox;
     @FXML
     private CheckBox commentCheckBox;
     @FXML
-	private CheckBox overrideXML;
+    private CheckBox overrideXML;
     @FXML
     private CheckBox needToStringHashcodeEquals;
     @FXML
@@ -90,8 +91,9 @@ public class MainUIController extends BaseFXController {
     private CheckBox annotationCheckBox;
     @FXML
     private CheckBox useActualColumnNamesCheckbox;
-    @FXML
-    private CheckBox useExample;
+    //暂时关闭 使用example和limit分页
+//    @FXML
+//    private CheckBox useExample;
     @FXML
     private CheckBox useDAOExtendStyle;
     @FXML
@@ -132,13 +134,13 @@ public class MainUIController extends BaseFXController {
             controller.setMainUIController(this);
             controller.showDialogStage();
         });
-		useExample.setOnMouseClicked(event -> {
-			if (useExample.isSelected()) {
-				offsetLimitCheckBox.setDisable(false);
-			} else {
-				offsetLimitCheckBox.setDisable(true);
-			}
-		});
+//		useExample.setOnMouseClicked(event -> {
+//			if (useExample.isSelected()) {
+//				offsetLimitCheckBox.setDisable(false);
+//			} else {
+//				offsetLimitCheckBox.setDisable(true);
+//			}
+//		});
 
         leftDBTree.setShowRoot(false);
         leftDBTree.setRoot(new TreeItem<>());
@@ -153,14 +155,14 @@ public class MainUIController extends BaseFXController {
                     final ContextMenu contextMenu = new ContextMenu();
                     MenuItem item1 = new MenuItem("关闭连接");
                     item1.setOnAction(event1 -> treeItem.getChildren().clear());
-	                MenuItem item2 = new MenuItem("编辑连接");
-	                item2.setOnAction(event1 -> {
-		                DatabaseConfig selectedConfig = (DatabaseConfig) treeItem.getGraphic().getUserData();
+                    MenuItem item2 = new MenuItem("编辑连接");
+                    item2.setOnAction(event1 -> {
+                        DatabaseConfig selectedConfig = (DatabaseConfig) treeItem.getGraphic().getUserData();
                         TabPaneController controller = (TabPaneController) loadFXMLPage("编辑数据库连接", FXMLPage.NEW_CONNECTION, false);
-		                controller.setMainUIController(this);
-		                controller.setConfig(selectedConfig);
-		                controller.showDialogStage();
-	                });
+                        controller.setMainUIController(this);
+                        controller.setConfig(selectedConfig);
+                        controller.showDialogStage();
+                    });
                     MenuItem item3 = new MenuItem("删除连接");
                     item3.setOnAction(event1 -> {
                         DatabaseConfig selectedConfig = (DatabaseConfig) treeItem.getGraphic().getUserData();
@@ -175,8 +177,8 @@ public class MainUIController extends BaseFXController {
                     cell.setContextMenu(contextMenu);
                 }
                 if (event.getClickCount() == 2) {
-                    if(treeItem == null) {
-                        return ;
+                    if (treeItem == null) {
+                        return;
                     }
                     treeItem.setExpanded(true);
                     if (level == 1) {
@@ -216,22 +218,22 @@ public class MainUIController extends BaseFXController {
             return cell;
         });
         loadLeftDBTree();
-		setTooltip();
-		//默认选中第一个，否则如果忘记选择，没有对应错误提示
+        setTooltip();
+        //默认选中第一个，否则如果忘记选择，没有对应错误提示
         encodingChoice.getSelectionModel().selectFirst();
-	}
+    }
 
-	private void setTooltip() {
-		encodingChoice.setTooltip(new Tooltip("生成文件的编码，必选"));
-		generateKeysField.setTooltip(new Tooltip("insert时可以返回主键ID"));
-		offsetLimitCheckBox.setTooltip(new Tooltip("是否要生成分页查询代码"));
-		commentCheckBox.setTooltip(new Tooltip("使用数据库的列注释作为实体类字段名的Java注释 "));
-		useActualColumnNamesCheckbox.setTooltip(new Tooltip("是否使用数据库实际的列名作为实体类域的名称"));
-		useTableNameAliasCheckbox.setTooltip(new Tooltip("在Mapper XML文件中表名使用别名，并且列全部使用as查询"));
-		overrideXML.setTooltip(new Tooltip("重新生成时把原XML文件覆盖，否则是追加"));
+    private void setTooltip() {
+        encodingChoice.setTooltip(new Tooltip("生成文件的编码，必选"));
+        generateKeysField.setTooltip(new Tooltip("insert时可以返回主键ID"));
+        //offsetLimitCheckBox.setTooltip(new Tooltip("是否要生成分页查询代码"));
+        commentCheckBox.setTooltip(new Tooltip("使用数据库的列注释作为实体类字段名的Java注释 "));
+        useActualColumnNamesCheckbox.setTooltip(new Tooltip("是否使用数据库实际的列名作为实体类域的名称"));
+        useTableNameAliasCheckbox.setTooltip(new Tooltip("在Mapper XML文件中表名使用别名，并且列全部使用as查询"));
+        overrideXML.setTooltip(new Tooltip("重新生成时把原XML文件覆盖，否则是追加"));
         useDAOExtendStyle.setTooltip(new Tooltip("将通用接口方法放在公共接口中，DAO接口留空"));
         forUpdateCheckBox.setTooltip(new Tooltip("在Select语句中增加for update后缀"));
-	}
+    }
 
     void loadLeftDBTree() {
         TreeItem rootTreeItem = leftDBTree.getRoot();
@@ -270,10 +272,10 @@ public class MainUIController extends BaseFXController {
             return;
         }
         String result = validateConfig();
-		if (result != null) {
-			AlertUtil.showErrorAlert(result);
-			return;
-		}
+        if (result != null) {
+            AlertUtil.showErrorAlert(result);
+            return;
+        }
         GeneratorConfig generatorConfig = getGeneratorConfigFromUI();
         if (!checkDirs(generatorConfig)) {
             return;
@@ -328,22 +330,22 @@ public class MainUIController extends BaseFXController {
         }
     }
 
-	private String validateConfig() {
-		String projectFolder = projectFolderField.getText();
-		if (StringUtils.isEmpty(projectFolder))  {
-			return "项目目录不能为空";
-		}
-		if (StringUtils.isEmpty(domainObjectNameField.getText()))  {
-			return "类名不能为空";
-		}
-		if (StringUtils.isAnyEmpty(modelTargetPackage.getText(), mapperTargetPackage.getText(), daoTargetPackage.getText())) {
-			return "包名不能为空";
-		}
+    private String validateConfig() {
+        String projectFolder = projectFolderField.getText();
+        if (StringUtils.isEmpty(projectFolder)) {
+            return "项目目录不能为空";
+        }
+        if (StringUtils.isEmpty(domainObjectNameField.getText())) {
+            return "类名不能为空";
+        }
+        if (StringUtils.isAnyEmpty(modelTargetPackage.getText(), mapperTargetPackage.getText(), daoTargetPackage.getText())) {
+            return "包名不能为空";
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	@FXML
+    @FXML
     public void saveGeneratorConfig() {
         TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle("保存当前配置");
@@ -381,7 +383,7 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setMappingXMLTargetFolder(mappingTargetProject.getText());
         generatorConfig.setTableName(tableNameField.getText());
         generatorConfig.setDomainObjectName(domainObjectNameField.getText());
-        generatorConfig.setOffsetLimit(offsetLimitCheckBox.isSelected());
+//        generatorConfig.setOffsetLimit(offsetLimitCheckBox.isSelected());
         generatorConfig.setComment(commentCheckBox.isSelected());
         generatorConfig.setOverrideXML(overrideXML.isSelected());
         generatorConfig.setNeedToStringHashcodeEquals(needToStringHashcodeEquals.isSelected());
@@ -391,7 +393,7 @@ public class MainUIController extends BaseFXController {
         generatorConfig.setAnnotation(annotationCheckBox.isSelected());
         generatorConfig.setUseActualColumnNames(useActualColumnNamesCheckbox.isSelected());
         generatorConfig.setEncoding(encodingChoice.getValue());
-        generatorConfig.setUseExample(useExample.isSelected());
+//        generatorConfig.setUseExample(useExample.isSelected());
         generatorConfig.setUseDAOExtendStyle(useDAOExtendStyle.isSelected());
         generatorConfig.setUseSchemaPrefix(useSchemaPrefix.isSelected());
         generatorConfig.setJsr310Support(jsr310Support.isSelected());
@@ -404,13 +406,13 @@ public class MainUIController extends BaseFXController {
         generateKeysField.setText(generatorConfig.getGenerateKeys());
         modelTargetProject.setText(generatorConfig.getModelPackageTargetFolder());
         daoTargetPackage.setText(generatorConfig.getDaoPackage());
-		daoTargetProject.setText(generatorConfig.getDaoTargetFolder());
-		mapperName.setText(generatorConfig.getMapperName());
-		mapperTargetPackage.setText(generatorConfig.getMappingXMLPackage());
+        daoTargetProject.setText(generatorConfig.getDaoTargetFolder());
+        mapperName.setText(generatorConfig.getMapperName());
+        mapperTargetPackage.setText(generatorConfig.getMappingXMLPackage());
         mappingTargetProject.setText(generatorConfig.getMappingXMLTargetFolder());
         tableNameField.setText(generatorConfig.getTableName());
         domainObjectNameField.setText(generatorConfig.getDomainObjectName());
-        offsetLimitCheckBox.setSelected(generatorConfig.isOffsetLimit());
+//        offsetLimitCheckBox.setSelected(generatorConfig.isOffsetLimit());
         commentCheckBox.setSelected(generatorConfig.isComment());
         overrideXML.setSelected(generatorConfig.isOverrideXML());
         needToStringHashcodeEquals.setSelected(generatorConfig.isNeedToStringHashcodeEquals());
@@ -420,7 +422,7 @@ public class MainUIController extends BaseFXController {
         annotationCheckBox.setSelected(generatorConfig.isAnnotation());
         useActualColumnNamesCheckbox.setSelected(generatorConfig.isUseActualColumnNames());
         encodingChoice.setValue(generatorConfig.getEncoding());
-        useExample.setSelected(generatorConfig.isUseExample());
+//        useExample.setSelected(generatorConfig.isUseExample());
         useDAOExtendStyle.setSelected(generatorConfig.isUseDAOExtendStyle());
         useSchemaPrefix.setSelected(generatorConfig.isUseSchemaPrefix());
         jsr310Support.setSelected(generatorConfig.isJsr310Support());
@@ -463,37 +465,37 @@ public class MainUIController extends BaseFXController {
      * @return
      */
     private boolean checkDirs(GeneratorConfig config) {
-		List<String> dirs = new ArrayList<>();
-		dirs.add(config.getProjectFolder());
-		dirs.add(FilenameUtils.normalize(config.getProjectFolder().concat("/").concat(config.getModelPackageTargetFolder())));
-		dirs.add(FilenameUtils.normalize(config.getProjectFolder().concat("/").concat(config.getDaoTargetFolder())));
-		dirs.add(FilenameUtils.normalize(config.getProjectFolder().concat("/").concat(config.getMappingXMLTargetFolder())));
-		boolean haveNotExistFolder = false;
-		for (String dir : dirs) {
-			File file = new File(dir);
-			if (!file.exists()) {
-				haveNotExistFolder = true;
-			}
-		}
-		if (haveNotExistFolder) {
-			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-			alert.setContentText(FOLDER_NO_EXIST);
-			Optional<ButtonType> optional = alert.showAndWait();
-			if (optional.isPresent()) {
-				if (ButtonType.OK == optional.get()) {
-					try {
-						for (String dir : dirs) {
-							FileUtils.forceMkdir(new File(dir));
-						}
-						return true;
-					} catch (Exception e) {
-						AlertUtil.showErrorAlert("创建目录失败，请检查目录是否是文件而非目录");
-					}
-				} else {
-					return false;
-				}
-			}
-		}
+        List<String> dirs = new ArrayList<>();
+        dirs.add(config.getProjectFolder());
+        dirs.add(FilenameUtils.normalize(config.getProjectFolder().concat("/").concat(config.getModelPackageTargetFolder())));
+        dirs.add(FilenameUtils.normalize(config.getProjectFolder().concat("/").concat(config.getDaoTargetFolder())));
+        dirs.add(FilenameUtils.normalize(config.getProjectFolder().concat("/").concat(config.getMappingXMLTargetFolder())));
+        boolean haveNotExistFolder = false;
+        for (String dir : dirs) {
+            File file = new File(dir);
+            if (!file.exists()) {
+                haveNotExistFolder = true;
+            }
+        }
+        if (haveNotExistFolder) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText(FOLDER_NO_EXIST);
+            Optional<ButtonType> optional = alert.showAndWait();
+            if (optional.isPresent()) {
+                if (ButtonType.OK == optional.get()) {
+                    try {
+                        for (String dir : dirs) {
+                            FileUtils.forceMkdir(new File(dir));
+                        }
+                        return true;
+                    } catch (Exception e) {
+                        AlertUtil.showErrorAlert("创建目录失败，请检查目录是否是文件而非目录");
+                    }
+                } else {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
@@ -503,7 +505,7 @@ public class MainUIController extends BaseFXController {
         String projectFolder = generatorConfig.getProjectFolder();
         try {
             Desktop.getDesktop().browse(new File(projectFolder).toURI());
-        }catch (Exception e) {
+        } catch (Exception e) {
             AlertUtil.showErrorAlert("打开目录失败，请检查目录是否填写正确" + e.getMessage());
         }
 
