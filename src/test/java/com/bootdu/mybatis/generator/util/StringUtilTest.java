@@ -1,6 +1,5 @@
-package com.zzg.mybatis.generator.util;
+package com.bootdu.mybatis.generator.util;
 
-import com.bootdu.mybatis.generator.util.MyStringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 

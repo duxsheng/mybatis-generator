@@ -228,8 +228,8 @@ public class MybatisGeneratorBridge {
             if (DbType.MySQL.name().equals(dbType) || DbType.MySQL_8.name().equals(dbType)
                     || DbType.PostgreSQL.name().equals(dbType)) {
                 PluginConfiguration pluginConfiguration = new PluginConfiguration();
-                pluginConfiguration.addProperty("type", "RepositoryPlugin");
-                pluginConfiguration.setConfigurationType("RepositoryPlugin");
+                pluginConfiguration.addProperty("type", "com.bootdu.mybatis.generator.plugins.RepositoryPlugin");
+                pluginConfiguration.setConfigurationType("com.bootdu.mybatis.generator.plugins.RepositoryPlugin");
                 context.addPluginConfiguration(pluginConfiguration);
             }
         }
@@ -238,8 +238,8 @@ public class MybatisGeneratorBridge {
                     || DbType.PostgreSQL.name().equals(dbType)) {
                 PluginConfiguration pluginConfiguration = new PluginConfiguration();
 				pluginConfiguration.addProperty("useExample", String.valueOf(generatorConfig.isUseExample()));
-				pluginConfiguration.addProperty("type", "CommonDAOInterfacePlugin");
-                pluginConfiguration.setConfigurationType("CommonDAOInterfacePlugin");
+				pluginConfiguration.addProperty("type", "com.bootdu.mybatis.generator.plugins.CommonDAOInterfacePlugin");
+                pluginConfiguration.setConfigurationType("com.bootdu.mybatis.generator.plugins.CommonDAOInterfacePlugin");
                 context.addPluginConfiguration(pluginConfiguration);
             }
         }
