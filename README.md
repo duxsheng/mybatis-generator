@@ -1,5 +1,5 @@
 # clone代码
-git clone https://github.com/duxsheng/mybatis-generator
+git clone https://github.com/duxsheng/mybatis-generator.git
 # 进入文件夹
 cd mybatis-generator
 # 执行mvn编译
